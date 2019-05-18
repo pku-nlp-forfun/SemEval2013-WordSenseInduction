@@ -16,11 +16,11 @@ class Lexelt:
     def __init__(self, lemma_pos: str):
         self.lemma, pos = lemma_pos.split('.')
         self.pos = pos_to_wnpos[pos]
-        self.instances = {}
+        self.instances = []
         self.max_sentence_len = 0
 
     def addInstance(self, token: str, num: str, context: str):
-        self.instances[num] = {"token": token, "context": context}
+        self.instances.append({"id": num, "token": token, "context": context})
         self.max_sentence_len = max(len(context), self.max_sentence_len)
 
 

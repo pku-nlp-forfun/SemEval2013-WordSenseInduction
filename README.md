@@ -10,6 +10,25 @@ Three Subtask:
 
 > The link of description for each subtask is broken.
 
+## Getting Started
+
+```sh
+# get fastText pre-trained embedding
+bash fastTextPretrainEmbedding.sh
+
+# get the topN key file
+python3 similarity.py
+
+# evaluate
+./evaluate.sh Result/top2.key
+```
+
+### File Purpose
+
+* `corpus.py` - load the SemEval xml data into `Lexelt` object
+* `embedding.py` - sentence embedding based on fastText
+* `similarity.py` - calculating similarity between test data sentence with wordNet definitions
+
 ## Task Overview
 
 [Task Description in Detail](SemEval-2013-Task-13-test-data/README.md)
@@ -61,10 +80,16 @@ Sense Cluster Comparison
 Big Picture
 
 1. Use the definitions of word from WordNet / or From the test data
-2. Transfer them into vectors
-3. Calculate the similarity between each defiition sentences
+   1. Use WordNet's explainations to represent the meaning
+   2. Use the context to represent the meaning
+2. Transfer sentences into vectors
+3. Calculate the similarity between each definition sentences
 4. For each test data export 2 possible sense with the most similarity
 5. The weight of the 2 possible sense is the ratio between the similarity of them
+
+#### Embedding
+
+* [fastText Pretrained English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
 
 ### The ELMo Approach
 
@@ -97,6 +122,8 @@ Relative Works
 
 * [Paper - Word Sense Induction with Neural biLM and Symmetric Patterns](https://arxiv.org/abs/1808.08518)
   * [asafamr/SymPatternWSI](https://github.com/asafamr/SymPatternWSI)
+* [Paper - AutoSense Model for Word Sense Induction](https://arxiv.org/abs/1811.09242)
+  * [rktamplayo/AutoSense](https://github.com/rktamplayo/AutoSense)
 
 ### WordNet 3.1
 
@@ -123,6 +150,7 @@ from nltk.corpus import wordnet as wn
 ```py
 # Synset.definition()
 wn.synsets('dark') # list of Synset
+wn.synsets('dark', pos=wn.NOUN)
 wn.synset('dark.n.01') # a Synset
 
 # Lemma.key()
