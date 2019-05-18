@@ -25,9 +25,9 @@ python3 similarity.py
 
 ### File Purpose
 
-* `corpus.py` - load the SemEval xml data into `Lexelt` object
-* `embedding.py` - sentence embedding based on fastText
-* `similarity.py` - calculating similarity between test data sentence with wordNet definitions
+- `corpus.py` - load the SemEval xml data into `Lexelt` object
+- `embedding.py` - sentence embedding based on fastText
+- `similarity.py` - calculating similarity between test data sentence with wordNet definitions
 
 ## Task Overview
 
@@ -35,33 +35,33 @@ python3 similarity.py
 
 ### [Given Data](SemEval-2013-Task-13-test-data/README.md#DIRECTORY-LAYOUT-AND-FILE-DESCRIPTIONS)
 
-* Contexts
-  * senseval2-format
-  * xml-format
-* Keys
-  * [baselines](SemEval-2013-Task-13-test-data/README.md#BASELINES)
-  * gold
-  * systems
-* Scoring - [Evaluation](SemEval-2013-Task-13-test-data/README.md#EVALUATION)
+- Contexts
+  - senseval2-format
+  - xml-format
+- Keys
+  - [baselines](SemEval-2013-Task-13-test-data/README.md#BASELINES)
+  - gold
+  - systems
+- Scoring - [Evaluation](SemEval-2013-Task-13-test-data/README.md#EVALUATION)
 
 ### [ukWaC - Corpus for WSI](SemEval-2013-Task-13-test-data/README.md#TRAINING-DATA)
 
-* [WaCky - The Web-As-Corpus Kool Yinitiative](https://wacky.sslmit.unibo.it/doku.php)
-  * [paper](https://wacky.sslmit.unibo.it/lib/exe/fetch.php?media=papers:wacky_2008.pdf)
-  * [tagset](https://wacky.sslmit.unibo.it/lib/exe/fetch.php?media=tagsets:ukwac_tagset.txt)
+- [WaCky - The Web-As-Corpus Kool Yinitiative](https://wacky.sslmit.unibo.it/doku.php)
+  - [paper](https://wacky.sslmit.unibo.it/lib/exe/fetch.php?media=papers:wacky_2008.pdf)
+  - [tagset](https://wacky.sslmit.unibo.it/lib/exe/fetch.php?media=tagsets:ukwac_tagset.txt)
 
 ### Evaluation
 
 WSD F1
 
-* Jaccard Index
-* Positionally-Weighted Kendall's $\tau$
-* Weighted NDCG
+- Jaccard Index
+- Positionally-Weighted Kendall's $\tau$
+- Weighted NDCG
 
 Sense Cluster Comparison
 
-* Fuzzy NMI
-* Fuzzy B-Cubed
+- Fuzzy NMI
+- Fuzzy B-Cubed
 
 #### Weighted NDCG
 
@@ -71,7 +71,7 @@ Sense Cluster Comparison
 
 > NMI stands for Normalized Mutual Information
 
-* [Wiki - Mutual information](https://en.wikipedia.org/wiki/Mutual_Information)
+- [Wiki - Mutual information](https://en.wikipedia.org/wiki/Mutual_Information)
 
 ## Our Works
 
@@ -89,7 +89,7 @@ Big Picture
 
 #### Embedding
 
-* [fastText Pretrained English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
+- [fastText Pretrained English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
 
 ### The ELMo Approach
 
@@ -99,44 +99,44 @@ Big Picture
 
 ## Links
 
-* [Wiki - SemEval](https://en.wikipedia.org/wiki/SemEval)
-* [ACL Anthology](https://www.aclweb.org/anthology/)
-  * [Lexical and Computational Semantics and Semantic Evaluation (formerly Workshop on Sense Evaluation) (*SEMEVAL)](https://www.aclweb.org/anthology/venues/semeval/)
-    * [2013](https://www.aclweb.org/anthology/events/semeval-2013/)
+- [Wiki - SemEval](https://en.wikipedia.org/wiki/SemEval)
+- [ACL Anthology](https://www.aclweb.org/anthology/)
+  - [Lexical and Computational Semantics and Semantic Evaluation (formerly Workshop on Sense Evaluation) (\*SEMEVAL)](https://www.aclweb.org/anthology/venues/semeval/)
+    - [2013](https://www.aclweb.org/anthology/events/semeval-2013/)
 
 ### SemEval 2013
 
-* [SemEval 2013: Program](https://www.cs.york.ac.uk/semeval-2013/accepted.html)
+- [SemEval 2013: Program](https://www.cs.york.ac.uk/semeval-2013/accepted.html)
 
 #### Subtask 13
 
-* [**Word Sense Induction for Graded and Non-Graded Senses**](https://www.cs.york.ac.uk/semeval-2013/task13.html)
-* [**Task 13 Paper**](https://www.aclweb.org/anthology/S13-2049)
-  * [link in ACL Anthology](https://www.aclweb.org/anthology/papers/S/S13/S13-2049/)
-  * [SemanticScholer](https://www.semanticscholar.org/paper/SemEval-2013-Task-13%3A-Word-Sense-Induction-for-and-Jurgens-Klapaftis/0d62b1bc53f8c253915d3ba5de50b461b49b7ead)
-* [**All data and system submissions**](https://www.cs.york.ac.uk/semeval-2013/task13/data/uploads/semeval-2013-task-13-test-data.zip) - i.e. the "SemEval-2013-Task-13-test-data" folder
-* [Errata (Corrigendum)](https://www.cs.mcgill.ca/~jurgens/docs/semeval-2013-task13-errata.pdf)
-  * [cluster-comparison-tools](https://code.google.com/archive/p/cluster-comparison-tools/)
+- [**Word Sense Induction for Graded and Non-Graded Senses**](https://www.cs.york.ac.uk/semeval-2013/task13.html)
+- [**Task 13 Paper**](https://www.aclweb.org/anthology/S13-2049)
+  - [link in ACL Anthology](https://www.aclweb.org/anthology/papers/S/S13/S13-2049/)
+  - [SemanticScholer](https://www.semanticscholar.org/paper/SemEval-2013-Task-13%3A-Word-Sense-Induction-for-and-Jurgens-Klapaftis/0d62b1bc53f8c253915d3ba5de50b461b49b7ead)
+- [**All data and system submissions**](https://www.cs.york.ac.uk/semeval-2013/task13/data/uploads/semeval-2013-task-13-test-data.zip) - i.e. the "SemEval-2013-Task-13-test-data" folder
+- [Errata (Corrigendum)](https://www.cs.mcgill.ca/~jurgens/docs/semeval-2013-task13-errata.pdf)
+  - [cluster-comparison-tools](https://code.google.com/archive/p/cluster-comparison-tools/)
 
 Relative Works
 
-* [Paper - Word Sense Induction with Neural biLM and Symmetric Patterns](https://arxiv.org/abs/1808.08518)
-  * [asafamr/SymPatternWSI](https://github.com/asafamr/SymPatternWSI)
-* [Paper - AutoSense Model for Word Sense Induction](https://arxiv.org/abs/1811.09242)
-  * [rktamplayo/AutoSense](https://github.com/rktamplayo/AutoSense)
+- [Paper - Word Sense Induction with Neural biLM and Symmetric Patterns](https://arxiv.org/abs/1808.08518)
+  - [asafamr/SymPatternWSI](https://github.com/asafamr/SymPatternWSI)
+- [Paper - AutoSense Model for Word Sense Induction](https://arxiv.org/abs/1811.09242)
+  - [rktamplayo/AutoSense](https://github.com/rktamplayo/AutoSense)
 
 ### WordNet 3.1
 
-* [WordNet](http://wordnet.princeton.edu/)
-  * [Download - current version](https://wordnet.princeton.edu/download/current-version)
+- [WordNet](http://wordnet.princeton.edu/)
+  - [Download - current version](https://wordnet.princeton.edu/download/current-version)
 
 > Version 3.1 is currently available only online.
 
-* [**WordNet Search - 3.1**](http://wordnetweb.princeton.edu/perl/webwn)
+- [**WordNet Search - 3.1**](http://wordnetweb.princeton.edu/perl/webwn)
 
 #### NLTK API
 
-* [**WordNet Interface**](http://www.nltk.org/howto/wordnet.html)
+- [**WordNet Interface**](http://www.nltk.org/howto/wordnet.html)
 
 ```py
 # get wordnet (at the first time)
@@ -156,3 +156,21 @@ wn.synset('dark.n.01') # a Synset
 # Lemma.key()
 wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
 ```
+
+## Motivation
+
+> WSI = Word Sense Induction
+> It's a task to get the word sense
+
+- local
+  - syntactic
+  - close to the disambiguate word
+- global
+  - thematic
+  - semantic
+
+## Exercise
+
+| model | Embedding | F-NMI | FBC   | AVG   |
+| ----- | --------- | ----- | ----- | ----- |
+| BiLM  | ELMo      | 11.06 | 57.72 | 25.27 |
