@@ -171,11 +171,11 @@ wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
 
 ## Exercise
 
-| model | Embedding | F-NMI | F_BC  | AVG   |
-| ----- | --------- | ----- | ----- | ----- |
-| Top1  | fastText  | 2.81  | 50.22 | 11.89 |
-| Top2  | fastText  | 8.56  | 52.10 | 21.12 |
-| Top3  | fastText  | 7.15  | 42.87 | 17.51 |
-| Top4  | fastText  | 6.61  | 32.07 | 14.56 |
-| Top5  | fastText  | 5.92  | 24.80 | 12.11 |
-| BiLM  | ELMo      | 11.06 | 57.72 | 25.27 |
+| model | Embedding | Jac.  | POS   | WNDC  | F-NMI | F_BC  | AVG   |
+| ----- | --------- | ----- | ----- | ----- | ----- | ----- | ----- |
+| Top1  | fastText  | 23.81 | 61.84 | 29.30 | 2.81  | 50.22 | 11.89 |
+| Top2  | fastText  | 19.62 | 59.88 | 35.98 | 8.56  | 52.10 | 21.12 |
+| Top3  | fastText  | 19.22 | 59.61 | 37.90 | 7.15  | 42.87 | 17.51 |
+| Top4  | fastText  | 19.20 | 59.58 | 37.47 | 6.61  | 32.07 | 14.56 |
+| Top5  | fastText  | 19.20 | 59.50 | 36.25 | 5.92  | 24.80 | 12.11 |
+| BiLM  | ELMo      | 20.20 | 62.40 | 34.06 | 11.28 | 57.59 | 25.49 |
