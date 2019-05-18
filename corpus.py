@@ -17,9 +17,11 @@ class Lexelt:
         self.lemma, pos = lemma_pos.split('.')
         self.pos = pos_to_wnpos[pos]
         self.instances = {}
+        self.max_sentence_len = 0
 
     def addInstance(self, token: str, num: str, context: str):
         self.instances[num] = {"token": token, "context": context}
+        self.max_sentence_len = max(len(context), self.max_sentence_len)
 
 
 def loadSenseval2Format(filename: str = RAW_DATA) -> Dict[str, Lexelt]:
@@ -50,6 +52,7 @@ def main():
     print(Dataset["become.v"].lemma)
     print(Dataset["become.v"].pos)
     print(Dataset["become.v"].instances["1"])
+    print(Dataset["become.v"].max_sentence_len)
 
 
 if __name__ == "__main__":
