@@ -75,7 +75,7 @@ Sense Cluster Comparison
 
 ## Our Works
 
-### The Top2 Approach
+### The TopN Approach
 
 Big Picture
 
@@ -84,8 +84,8 @@ Big Picture
    2. Use the context to represent the meaning
 2. Transfer sentences into vectors
 3. Calculate the similarity between each definition sentences
-4. For each test data export 2 possible sense with the most similarity
-5. The weight of the 2 possible sense is the ratio between the similarity of them
+4. For each test data export N possible sense with the most similarity
+   1. Each of their weights minus the N+1th's weight
 
 #### Embedding
 

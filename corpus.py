@@ -36,7 +36,7 @@ def loadSenseval2Format(filename: str = RAW_DATA) -> Dict[str, Lexelt]:
         currentLexelt = Lexelt(item)
 
         for instance in lexelt.findAll("instance"):
-            num = instance["id"][-1]
+            num = instance["id"].split('.')[-1]
             token = instance.head.text
             context = instance.context.text
             currentLexelt.addInstance(token, num, context)

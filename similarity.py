@@ -3,6 +3,7 @@ from corpus import loadSenseval2Format
 import numpy as np
 from scipy.spatial import distance
 from operator import itemgetter
+from collections import defaultdict
 
 import os
 
@@ -10,11 +11,18 @@ RESULT_PATH = "Result"
 
 
 def sentenceSimilarity(sentenceEmbedding: np.array, definitionEmbedding: np.array):
-    # may test different similarity method
+    """
+    Calculate the similarity between two sentences
+
+    (may test different similarity method)
+    """
     return 1/distance.cosine(sentenceEmbedding, definitionEmbedding)
 
 
 def sentenceVsDefinitions(sentence: str, definitions: dict, embedding: dict):
+    """
+    The similarity between the sentence and all the definitions
+    """
     similarityDict = {}
     for lemma_key, definitionEmbedding in definitions.items():
         similarityDict[lemma_key] = sentenceSimilarity(
@@ -23,18 +31,30 @@ def sentenceVsDefinitions(sentence: str, definitions: dict, embedding: dict):
 
 
 def topNSimilarity(lemma, N: int, embedding: dict):
+    """
+    For each Lemma, calculate the similarity with all the definition of the Lemma itself.
+    And select the top N weight as result.
+    (the top N result has all minus the weight of the top N+1th result)
+    """
     definitions = wordNetMeaningEmbeddings(lemma.lemma, lemma.pos, embedding)
-    result = {}
+    result = defaultdict(list)
     for instance in lemma.instances:
         similarityDict = sentenceVsDefinitions(
             instance['context'], definitions, embedding)
-        result[instance["id"]] = sorted(
-            similarityDict.items(), key=itemgetter(1), reverse=True)[:N]
+        candidates = sorted(similarityDict.items(),
+                            key=itemgetter(1), reverse=True)[:N+1]
+        thresholdWeight = candidates[-1][1] # get the wiehgt of the N+1th definition
+        for lemma_key, weight in candidates[:N]:
+            result[instance["id"]].append(
+                (lemma_key, weight - thresholdWeight))
 
     return result
 
 
 def topNcorpusVsWordnet(Dataset, embedding, N: int):
+    """
+    Calculating top N similarity and output result
+    """
     checkFileAndRemove(N)  # remove previous result
 
     print("Dealing with top %d result..." % N)
