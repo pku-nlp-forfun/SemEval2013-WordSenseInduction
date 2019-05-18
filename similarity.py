@@ -43,7 +43,8 @@ def topNSimilarity(lemma, N: int, embedding: dict):
             instance['context'], definitions, embedding)
         candidates = sorted(similarityDict.items(),
                             key=itemgetter(1), reverse=True)[:N+1]
-        thresholdWeight = candidates[-1][1] # get the wiehgt of the N+1th definition
+        # get the wiehgt of the N+1th definition
+        thresholdWeight = candidates[-1][1]
         for lemma_key, weight in candidates[:N]:
             result[instance["id"]].append(
                 (lemma_key, weight - thresholdWeight))
@@ -85,7 +86,7 @@ def main():
 
     Dataset = loadSenseval2Format()
     embedding = loadPretrainedFastText()
-    for i in [2, 3, 4, 5]:
+    for i in [1, 2, 3, 4, 5]:
         topNcorpusVsWordnet(Dataset, embedding, i)
 
 
