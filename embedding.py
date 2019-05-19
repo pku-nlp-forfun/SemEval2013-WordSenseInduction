@@ -1,5 +1,6 @@
 from corpus import loadSenseval2Format
 from nltk.corpus import wordnet as wn
+from bert_embedding import BertEmbedding
 
 import numpy as np
 
@@ -11,9 +12,12 @@ from string import punctuation  # remove punctuation from string
 
 from tqdm import tqdm
 
-from configure import SentenceEmbedding
+from configure import SentenceEmbedding, EmbeddingMethod
 
-EMBEDDING = "Embedding/wiki-news-300d-1M"  # faxtText official
+
+EMBEDDING = EmbeddingMethod.BERT  # FastText, BERT
+
+EMBEDDING_FILE = "Embedding/wiki-news-300d-1M"  # faxtText official
 
 
 def getAllWord():
@@ -35,7 +39,7 @@ def getAllWord():
     return allWord
 
 
-def loadPretrainedFastText(filename: str = EMBEDDING):
+def loadPretrainedFastText(filename: str = EMBEDDING_FILE):
     if not os.path.isfile(filename + ".pkl"):
         print("Loading embedding and also dump to pickle format...")
         fin = io.open(filename+".vec", 'r', encoding='utf-8',
@@ -71,34 +75,44 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
     in the sentence to the maximum length.
     And then use max-pooling like TextCNN to reduce to fixed dimension representation.
     """
-    returnEmbedding = np.zeros((300, ))
-    if method == SentenceEmbedding.NaiveAdding:
-        for word in sentence.split():
-            try:
-                returnEmbedding += embedding[word.strip(punctuation)]
-            except KeyError:  # getting word which is not in embedding table
-                continue
-    elif method == SentenceEmbedding.NaiveNormalized:
-        sentenceLen = 0
-        for word in sentence.split():
-            try:
-                returnEmbedding += embedding[word.strip(punctuation)]
+
+    if EMBEDDING == EmbeddingMethod.FastText:
+        returnEmbedding = np.zeros((300, ))
+        if method == SentenceEmbedding.NaiveAdding:
+            for word in sentence.split():
+                try:
+                    returnEmbedding += embedding[word.strip(punctuation)]
+                except KeyError:  # getting word which is not in embedding table
+                    continue
+        elif method == SentenceEmbedding.NaiveNormalized:
+            sentenceLen = 0
+            for word in sentence.split():
+                try:
+                    returnEmbedding += embedding[word.strip(punctuation)]
+                    sentenceLen += 1
+                except KeyError:  # getting word which is not in embedding table
+                    continue
+            returnEmbedding /= sentenceLen
+        elif method == SentenceEmbedding.NaiveAvgPadding:
+            sentenceLen = 0
+            for word in sentence.split():
+                try:
+                    returnEmbedding += embedding[word.strip(punctuation)]
+                except KeyError:  # getting word which is not in embedding table
+                    returnEmbedding += embedding['AVG']
                 sentenceLen += 1
-            except KeyError:  # getting word which is not in embedding table
-                continue
-        returnEmbedding /= sentenceLen
-    elif method == SentenceEmbedding.NaiveAvgPadding:
-        sentenceLen = 0
-        for word in sentence.split():
-            try:
-                returnEmbedding += embedding[word.strip(punctuation)]
-            except KeyError:  # getting word which is not in embedding table
+            for _ in range(maxSentenceLen - sentenceLen):
+                # padding the sentence to maxSentenceLen
                 returnEmbedding += embedding['AVG']
-            sentenceLen += 1
-        for _ in range(maxSentenceLen - sentenceLen):
-            # padding the sentence to maxSentenceLen
-            returnEmbedding += embedding['AVG']
-        returnEmbedding /= maxSentenceLen
+            returnEmbedding /= maxSentenceLen
+
+    elif EMBEDDING == EmbeddingMethod.BERT:
+        bert_embedding = BertEmbedding()  # dimension should be (768,)
+        returnEmbedding = np.zeros((768, ))
+        if method == SentenceEmbedding.NaiveAdding:
+            embeddingList = bert_embedding(sentence.split())
+            for _, arrayList in embeddingList:
+                returnEmbedding += arrayList[0]
 
     return returnEmbedding
 

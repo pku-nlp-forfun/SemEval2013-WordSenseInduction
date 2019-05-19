@@ -19,3 +19,7 @@ SentenceEmbeddingString = {
     SentenceEmbedding.NaiveNormalized: "NaiveNormalized",
     SentenceEmbedding.NaiveAvgPadding: "NaiveAvgPadding"
 }
+
+class EmbeddingMethod(Enum):
+    FastText = 0
+    BERT = 1

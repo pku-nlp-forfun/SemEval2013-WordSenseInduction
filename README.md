@@ -90,6 +90,19 @@ Big Picture
 #### Embedding
 
 - [fastText Pretrained English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
+- [imgarylai/bert-embedding](https://github.com/imgarylai/bert-embedding)
+
+    ```py
+    from bert_embedding import BertEmbedding
+
+    bert_embedding = BertEmbedding()
+    result = bert_embedding(sentence)
+    ```
+
+    ```txt
+    ERROR: mxnet 1.4.0 has requirement numpy<1.15.0,>=1.8.2, but you'll have numpy 1.16.3 which is incompatible.
+    ERROR: bert-embedding 1.0.1 has requirement numpy==1.14.6, but you'll have numpy 1.16.3 which is incompatible.
+    ```
 
 ### The ELMo Approach
 
