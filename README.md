@@ -101,25 +101,35 @@ Big Picture
 
 > Output of TopN must be N results.
 
-| model | Embedding | Similarity | Fuzzy NMI | Fuzzy B-Cube | AVG   |
-| ----- | --------- | ---------- | --------- | ------------ | ----- |
-| Top1  | fastText  | Cosine     | 2.81      | 50.22        | 11.89 |
-| Top2  | fastText  | Cosine     | 8.56      | 52.10        | 21.12 |
-| Top3  | fastText  | Cosine     | 7.15      | 42.87        | 17.51 |
-| Top4  | fastText  | Cosine     | 6.61      | 32.07        | 14.56 |
-| Top5  | fastText  | Cosine     | 5.92      | 24.80        | 12.11 |
+| model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top1  | fastText  | Cosine     | 23.81     | 61.84 | 29.30 | 2.81      | 50.22        | 11.89 |
+| Top2  | fastText  | Cosine     | 19.62     | 59.88 | 35.98 | 8.56      | 52.10        | 21.12 |
+| Top3  | fastText  | Cosine     | 19.22     | 59.61 | 37.90 | 7.15      | 42.87        | 17.51 |
+| Top4  | fastText  | Cosine     | 19.20     | 59.58 | 37.47 | 6.61      | 32.07        | 14.56 |
+| Top5  | fastText  | Cosine     | 19.20     | 59.50 | 36.25 | 5.92      | 24.80        | 12.11 |
+| Top1  | fastText  | Euclidean  | 24.45     | 61.35 | 28.96 | 3.63      | 47.78        | 13.17 |
+| Top2  | fastText  | Euclidean  | 21.25     | 60.19 | 35.47 | 7.87      | 46.06        | 19.04 |
+| Top3  | fastText  | Euclidean  | 20.09     | 60.09 | 36.99 | 6.97      | 40.36        | 16.77 |
+| Top4  | fastText  | Euclidean  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
+| Top5  | fastText  | Euclidean  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
+| Top1  | fastText  | Minkowski  | 24.45     | 61.35 | 28.96 | 3.63      | 47.78        | 13.17 |
+| Top2  | fastText  | Minkowski  | 21.25     | 60.19 | 35.47 | 7.87      | 46.06        | 19.04 |
+| Top3  | fastText  | Minkowski  | 20.09     | 60.09 | 36.99 | 6.97      | 40.36        | 16.77 |
+| Top4  | fastText  | Minkowski  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
+| Top5  | fastText  | Minkowski  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
 
 ### Generalized TopN Approach Result
 
 > Output of TopN must be less than N results.
 
-| model | Embedding | Similarity | Fuzzy NMI | Fuzzy B-Cube | AVG |
-| ----- | --------- | ---------- | --------- | ------------ | --- |
-| Top1  | fastText  | Cosine     |           |              |     |
-| Top2  | fastText  | Cosine     |           |              |     |
-| Top3  | fastText  | Cosine     |           |              |     |
-| Top4  | fastText  | Cosine     |           |              |     |
-| Top5  | fastText  | Cosine     |           |              |     |
+| model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top1  | fastText  | Cosine     | 23.81     | 61.84 | 29.30 | 2.81      | 50.22        | 11.89 |
+| Top2  | fastText  | Cosine     | 19.95     | 59.90 | 35.70 | 8.35      | 52.40        | 20.92 |
+| Top3  | fastText  | Cosine     | 19.28     | 59.58 | 37.81 | 7.15      | 44.16        | 17.77 |
+| Top4  | fastText  | Cosine     | 19.21     | 59.60 | 37.46 | 6.47      | 35.66        | 15.19 |
+| Top5  | fastText  | Cosine     | 19.20     | 59.51 | 36.23 | 5.88      | 28.48        | 12.94 |
 
 ## Links
 
@@ -195,6 +205,6 @@ wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
 
 ## Exercise
 
-| model | Embedding | F-NMI | F_BC  | AVG   |
-| ----- | --------- | ----- | ----- | ----- |
-| BiLM  | ELMo      | 11.06 | 57.72 | 25.27 |
+| model | Embedding | Jac.  | POS   | WNDC  | F-NMI | F_BC  | AVG   |
+| ----- | --------- | ----- | ----- | ----- | ----- | ----- | ----- |
+| BiLM  | ELMo      | 20.20 | 62.40 | 34.06 | 11.06 | 57.72 | 25.27 |
