@@ -159,6 +159,28 @@ Big Picture
 | Top4  | fastText  | Cosine     | 19.21     | 59.42 | 37.21 | 6.53      | 31.78        | 14.40 |
 | Top5  | fastText  | Cosine     | 19.20     | 59.54 | 35.33 | 5.94      | 24.56        | 12.08 |
 
+### Deprecated
+
+#### Generalized TopN Approach with at least M Result
+
+| model(M) | Embedding | Similarity | Sentence Embedding | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| -------- | --------- | ---------- | ------------------ | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top3(2)  | fastText  | Cosine     | NaiveAdding        | 19.30     | 59.66 | 38.15 | 7.45      | 44.58        | 18.23 |
+| Top4(2)  | fastText  | Cosine     | NaiveAdding        | 19.21     | 59.60 | 37.63 | 6.70      | 35.94        | 15.52 |
+| Top5(2)  | fastText  | Cosine     | NaiveAdding        | 19.20     | 59.66 | 36.19 | 6.11      | 28.94        | 13.30 |
+| Top3(2)  | fastText  | Cosine     | NaiveNormalized    | 19.30     | 59.66 | 38.15 | 7.45      | 44.58        | 18.23 |
+| Top4(2)  | fastText  | Cosine     | NaiveNormalized    | 19.21     | 59.60 | 37.63 | 6.70      | 35.94        | 15.52 |
+| Top5(2)  | fastText  | Cosine     | NaiveNormalized    | 19.20     | 59.66 | 36.19 | 6.11      | 28.94        | 13.30 |
+
+#### Generalized TopN Approach without minus the N+1 similarity
+
+| model | Embedding | Similarity | Sentence Embedding | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | --------- | ---------- | ------------------ | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top2  | fastText  | Cosine     | NaiveAdding        | 20.30     | 60.35 | 37.51 | 6.62      | 52.20        | 18.59 |
+| Top3  | fastText  | Cosine     | NaiveAdding        | 19.32     | 59.77 | 36.82 | 6.80      | 39.72        | 16.43 |
+| Top2  | fastText  | Cosine     | NaiveAvgPadding    | 22.20     | 61.61 | 31.98 | 3.78      | 53.26        | 14.19 |
+| Top3  | fastText  | Cosine     | NaiveAvgPadding    | 20.92     | 60.78 | 32.62 | 4.89      | 51.34        | 15.84 |
+
 ## Links
 
 - [Wiki - SemEval](https://en.wikipedia.org/wiki/SemEval)

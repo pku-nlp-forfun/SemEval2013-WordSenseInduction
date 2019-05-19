@@ -11,11 +11,12 @@ import os
 SIMILARITY = "Cosine"  # Cosine, Euclidean, Minkowski
 
 # if the result need to be just N (True) or can be less than N (False)
-STRICT_N = True
+STRICT_N = False
+LEASTN = 1  # at least N result (do not less than 1)
 THRESHOLD = 0.1  # If STRICT_N is False, then it will get rid off the weight which is less than THRESHOLD
 
-# NaiveAdding, BackPadding, FrontPadding
-SENTENCE_EMBEDDING = SentenceEmbedding.NaiveAvgPadding
+# NaiveAdding, NaiveNormalized, NaiveAvgPadding
+SENTENCE_EMBEDDING = SentenceEmbedding.NaiveAdding
 
 ######## Setting ########
 
@@ -62,7 +63,7 @@ def topNSimilarity(lemma, N: int, embedding: dict):
         # get the wiehgt of the N+1th definition
         thresholdWeight = candidates[-1][1]
         for lemma_key, weight in candidates[:N]:
-            if not STRICT_N and len(result[instance["id"]]) > 0 and weight - thresholdWeight < THRESHOLD:
+            if not STRICT_N and len(result[instance["id"]]) >= LEASTN and weight - thresholdWeight < THRESHOLD:
                 # skip the weight that is too less when disable STRICT_N (but at least with 1 result)
                 break
             result[instance["id"]].append(
