@@ -1,13 +1,28 @@
 from embedding import loadPretrainedFastText, getSentenceEmbedding, wordNetMeaningEmbeddings
 from corpus import loadSenseval2Format
 import numpy as np
-from scipy.spatial import distance
 from operator import itemgetter
 from collections import defaultdict
-
+from configure import Similarity, SentenceEmbedding, SentenceEmbeddingString
 import os
 
-RESULT_PATH = "Result"
+######## Setting ########
+
+SIMILARITY = "Cosine"  # Cosine, Euclidean, Minkowski
+
+# if the result need to be just N (True) or can be less than N (False)
+STRICT_N = False
+THRESHOLD = 0.1  # If STRICT_N is False, then it will get rid off the weight which is less than THRESHOLD
+
+# NaiveAdding, BackPadding, FrontPadding
+SENTENCE_EMBEDDING = SentenceEmbedding.NaiveAdding
+
+######## Setting ########
+
+TOPN = [1, 2, 3, 4, 5]  # the N value to test
+
+RESULT_PATH = "Result" + SIMILARITY + \
+    SentenceEmbeddingString[SENTENCE_EMBEDDING]
 
 
 def sentenceSimilarity(sentenceEmbedding: np.array, definitionEmbedding: np.array):
@@ -16,7 +31,7 @@ def sentenceSimilarity(sentenceEmbedding: np.array, definitionEmbedding: np.arra
 
     (may test different similarity method)
     """
-    return 1/distance.cosine(sentenceEmbedding, definitionEmbedding)
+    return Similarity[SIMILARITY](sentenceEmbedding, definitionEmbedding)
 
 
 def sentenceVsDefinitions(sentence: str, definitions: dict, embedding: dict):
@@ -46,6 +61,9 @@ def topNSimilarity(lemma, N: int, embedding: dict):
         # get the wiehgt of the N+1th definition
         thresholdWeight = candidates[-1][1]
         for lemma_key, weight in candidates[:N]:
+            if not STRICT_N and len(result[instance["id"]]) > 0 and weight - thresholdWeight < THRESHOLD:
+                # skip the weight that is too less when disable STRICT_N (but at least with 1 result)
+                break
             result[instance["id"]].append(
                 (lemma_key, weight - thresholdWeight))
 
@@ -84,9 +102,17 @@ def checkFileAndRemove(N: int):
 def main():
     os.makedirs(RESULT_PATH, exist_ok=True)
 
+    print("Current Setting:")
+    print("Similarity:", SIMILARITY)
+    if STRICT_N:
+        print("Strict TopN mode")
+    else:
+        print("Generalized TopN mode with THRESHOLD:", THRESHOLD)
+    print("Sentence Embedding:", SentenceEmbeddingString[SENTENCE_EMBEDDING])
+
     Dataset = loadSenseval2Format()
     embedding = loadPretrainedFastText()
-    for i in [1, 2, 3, 4, 5]:
+    for i in TOPN:
         topNcorpusVsWordnet(Dataset, embedding, i)
 
 

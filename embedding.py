@@ -11,6 +11,7 @@ from string import punctuation  # remove punctuation from string
 
 from tqdm import tqdm
 
+from configure import SentenceEmbedding
 
 EMBEDDING = "Embedding/wiki-news-300d-1M"  # faxtText official
 
@@ -61,18 +62,23 @@ def loadPretrainedFastText(filename: str = EMBEDDING):
     return embedding
 
 
-def getSentenceEmbedding(sentence: str, embedding: dict):
+def getSentenceEmbedding(sentence: str, embedding: dict, method: int = SentenceEmbedding.NaiveAdding):
     """
     The sentence Embedding is formed by concatting the words
     in the sentence to the maximum length.
     And then use max-pooling like TextCNN to reduce to fixed dimension representation.
     """
     returnEmbedding = np.zeros((300, ))
-    for word in sentence.split():
-        try:
-            returnEmbedding += embedding[word.strip(punctuation)]
-        except KeyError:  # getting word which is not in embedding table
-            continue
+    if method == SentenceEmbedding.NaiveAdding:
+        for word in sentence.split():
+            try:
+                returnEmbedding += embedding[word.strip(punctuation)]
+            except KeyError:  # getting word which is not in embedding table
+                continue
+    elif method == SentenceEmbedding.BackPadding:
+        pass  # TODO
+    elif method == SentenceEmbedding.FrontPadding:
+        pass  # TODO
 
     return returnEmbedding
 
