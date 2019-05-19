@@ -12,7 +12,12 @@ Three Subtask:
 
 ## Getting Started
 
+> If it's your first time using nltk's wordNet API. You have to [install](#NLTK-API) first.
+
 ```sh
+# install the dependencies
+pip3 install -r requirements.txt
+
 # get fastText pre-trained embedding
 bash fastTextPretrainEmbedding.sh
 
