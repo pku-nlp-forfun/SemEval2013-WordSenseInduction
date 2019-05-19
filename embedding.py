@@ -24,7 +24,7 @@ def getAllWord():
     allWord = set()
     Dataset = loadSenseval2Format()
     for lemma in Dataset.values():
-        for instence in lemma.instances.values():
+        for instence in lemma.instances:
             for word in instence['context'].split():
                 allWord.add(word.strip(punctuation))
 
@@ -52,6 +52,9 @@ def loadPretrainedFastText(filename: str = EMBEDDING):
             embedding[tokens[0]] = np.fromiter(
                 map(float, tokens[1:]), np.float)
 
+        # calculate average embedding
+        embedding['AVG'] = np.mean(list(embedding.values()))
+
         with open(filename + ".pkl", 'wb') as pklFile:
             pkl.dump(embedding, pklFile)
     else:
@@ -62,7 +65,7 @@ def loadPretrainedFastText(filename: str = EMBEDDING):
     return embedding
 
 
-def getSentenceEmbedding(sentence: str, embedding: dict, method: int = SentenceEmbedding.NaiveAdding):
+def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, method: int = SentenceEmbedding.NaiveAdding):
     """
     The sentence Embedding is formed by concatting the words
     in the sentence to the maximum length.
@@ -75,15 +78,32 @@ def getSentenceEmbedding(sentence: str, embedding: dict, method: int = SentenceE
                 returnEmbedding += embedding[word.strip(punctuation)]
             except KeyError:  # getting word which is not in embedding table
                 continue
-    elif method == SentenceEmbedding.BackPadding:
-        pass  # TODO
-    elif method == SentenceEmbedding.FrontPadding:
-        pass  # TODO
+    elif method == SentenceEmbedding.NaiveNormalized:
+        sentenceLen = 0
+        for word in sentence.split():
+            try:
+                returnEmbedding += embedding[word.strip(punctuation)]
+                sentenceLen += 1
+            except KeyError:  # getting word which is not in embedding table
+                continue
+        returnEmbedding /= sentenceLen
+    elif method == SentenceEmbedding.NaiveAvgPadding:
+        sentenceLen = 0
+        for word in sentence.split():
+            try:
+                returnEmbedding += embedding[word.strip(punctuation)]
+            except KeyError:  # getting word which is not in embedding table
+                returnEmbedding += embedding['AVG']
+            sentenceLen += 1
+        for _ in range(maxSentenceLen - sentenceLen):
+            # padding the sentence to maxSentenceLen
+            returnEmbedding += embedding['AVG']
+        returnEmbedding /= maxSentenceLen
 
     return returnEmbedding
 
 
-def wordNetMeaningEmbeddings(word: str, pos: str, embedding: dict) -> dict:
+def wordNetMeaningEmbeddings(word: str, pos: str, embedding: dict, maxSentenceLen: int) -> dict:
     """
     Get all the meanings in embedding format of a word in wordNet
 
@@ -94,7 +114,7 @@ def wordNetMeaningEmbeddings(word: str, pos: str, embedding: dict) -> dict:
         for lemma in synset.lemmas():
             if lemma.name() == word:
                 meaningEmbedding[lemma.key()] = getSentenceEmbedding(
-                    synset.definition(), embedding)
+                    synset.definition(), embedding, maxSentenceLen)
                 break
 
     return meaningEmbedding
@@ -107,14 +127,15 @@ def main():
 
     Dataset = loadSenseval2Format()
     # test the sentence to embedding
-    sentence = list(list(Dataset.values())[
-        0].instances.values())[0]['context']
+    sentence = list(Dataset.values())[
+        0].instances[0]['context']
     print("sentence embedding:", sentence,
-          getSentenceEmbedding(sentence, embedding))
+          getSentenceEmbedding(sentence, embedding, list(Dataset.values())[
+              0].max_sentence_len))
 
     # test the wordnet to embedding
     meaningEmbedding = wordNetMeaningEmbeddings(
-        Dataset["become.v"].lemma, Dataset["become.v"].pos, embedding)
+        Dataset["become.v"].lemma, Dataset["become.v"].pos, embedding, Dataset["become.v"].max_sentence_len)
     # test the definition string embedding
     print("wordnet meaning embedding:",  list(meaningEmbedding.keys())
           [0], list(meaningEmbedding.values())[0])

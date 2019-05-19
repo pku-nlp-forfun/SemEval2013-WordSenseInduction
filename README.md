@@ -97,7 +97,11 @@ Big Picture
 
 ## Evaluation Result
 
-### Strict TopN Approach Result
+### Naive Adding Strict vs. Generalized TopN Approach Result
+
+> The scentence embedding is simply adding by every word embeddings in the sentence
+
+#### Strict TopN Approach Result
 
 > Output of TopN must be N results.
 
@@ -119,7 +123,7 @@ Big Picture
 | Top4  | fastText  | Minkowski  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
 | Top5  | fastText  | Minkowski  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
 
-### Generalized TopN Approach Result
+#### Generalized TopN Approach Result
 
 > Output of TopN must be less than N results.
 
@@ -130,6 +134,30 @@ Big Picture
 | Top3  | fastText  | Cosine     | 19.28     | 59.58 | 37.81 | 7.15      | 44.16        | 17.77 |
 | Top4  | fastText  | Cosine     | 19.21     | 59.60 | 37.46 | 6.47      | 35.66        | 15.19 |
 | Top5  | fastText  | Cosine     | 19.20     | 59.51 | 36.23 | 5.88      | 28.48        | 12.94 |
+
+### Naive adding divided by sentence length Strict TopN Approach Result
+
+> The scentence embedding is simply adding by every word embeddings in the sentence, and then divided by its length
+
+| model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top1  | fastText  | Cosine     | 24.52     | 62.11 | 29.89 | 3.38      | 50.37        | 13.04 |
+| Top2  | fastText  | Cosine     | 19.68     | 60.30 | 36.25 | 8.92      | 52.51        | 21.64 |
+| Top3  | fastText  | Cosine     | 19.23     | 59.48 | 38.24 | 7.43      | 43.24        | 17.92 |
+| Top4  | fastText  | Cosine     | 19.20     | 59.61 | 37.65 | 6.74      | 32.11        | 14.71 |
+| Top5  | fastText  | Cosine     | 19.20     | 59.64 | 36.20 | 6.16      | 25.00        | 12.41 |
+
+### Padding sentence divided by max sentence length Strict TopN Approach Result
+
+> The sentence embedding is padding to the max sentence length using "AVG" embedding.
+
+| model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top1  | fastText  | Cosine     | 24.02     | 62.72 | 29.53 | 2.97      | 50.48        | 12.24 |
+| Top2  | fastText  | Cosine     | 19.48     | 60.08 | 35.94 | 8.15      | 52.45        | 20.68 |
+| Top3  | fastText  | Cosine     | 19.25     | 59.50 | 37.74 | 7.15      | 42.72        | 17.48 |
+| Top4  | fastText  | Cosine     | 19.21     | 59.42 | 37.21 | 6.53      | 31.78        | 14.40 |
+| Top5  | fastText  | Cosine     | 19.20     | 59.54 | 35.33 | 5.94      | 24.56        | 12.08 |
 
 ## Links
 
@@ -190,6 +218,11 @@ wn.synset('dark.n.01') # a Synset
 # Lemma.key()
 wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
 ```
+
+### Similarity
+
+- [FIVE MOST POPULAR SIMILARITY MEASURES IMPLEMENTATION IN PYTHON](http://dataaspirant.com/2015/04/11/five-most-popular-similarity-measures-implementation-in-python/)
+- [Scipy - Distance computations (scipy.spatial.distance)](https://docs.scipy.org/doc/scipy/reference/spatial.distance.html)
 
 ## Motivation
 

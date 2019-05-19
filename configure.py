@@ -9,13 +9,13 @@ Similarity = {
 
 
 class SentenceEmbedding(Enum):
-    NaiveAdding = 0
-    BackPadding = 1
-    FrontPadding = 2
+    NaiveAdding = 0  # just add all the embedding in the sentence
+    NaiveNormalized = 1  # divide the NaiveAdding result by word number
+    NaiveAvgPadding = 2  # padding the sentence to same length using average embedding
 
 
 SentenceEmbeddingString = {
     SentenceEmbedding.NaiveAdding: "NaiveAdding",
-    SentenceEmbedding.BackPadding: "BackPadding",
-    SentenceEmbedding.FrontPadding: "FrontPadding"
+    SentenceEmbedding.NaiveNormalized: "NaiveNormalized",
+    SentenceEmbedding.NaiveAvgPadding: "NaiveAvgPadding"
 }

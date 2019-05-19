@@ -11,11 +11,11 @@ import os
 SIMILARITY = "Cosine"  # Cosine, Euclidean, Minkowski
 
 # if the result need to be just N (True) or can be less than N (False)
-STRICT_N = False
+STRICT_N = True
 THRESHOLD = 0.1  # If STRICT_N is False, then it will get rid off the weight which is less than THRESHOLD
 
 # NaiveAdding, BackPadding, FrontPadding
-SENTENCE_EMBEDDING = SentenceEmbedding.NaiveAdding
+SENTENCE_EMBEDDING = SentenceEmbedding.NaiveAvgPadding
 
 ######## Setting ########
 
@@ -34,14 +34,14 @@ def sentenceSimilarity(sentenceEmbedding: np.array, definitionEmbedding: np.arra
     return Similarity[SIMILARITY](sentenceEmbedding, definitionEmbedding)
 
 
-def sentenceVsDefinitions(sentence: str, definitions: dict, embedding: dict):
+def sentenceVsDefinitions(sentence: str, definitions: dict, embedding: dict, maxSentenceLen: int):
     """
     The similarity between the sentence and all the definitions
     """
     similarityDict = {}
     for lemma_key, definitionEmbedding in definitions.items():
         similarityDict[lemma_key] = sentenceSimilarity(
-            getSentenceEmbedding(sentence, embedding), definitionEmbedding)
+            getSentenceEmbedding(sentence, embedding, maxSentenceLen, method=SENTENCE_EMBEDDING), definitionEmbedding)
     return similarityDict
 
 
@@ -51,11 +51,12 @@ def topNSimilarity(lemma, N: int, embedding: dict):
     And select the top N weight as result.
     (the top N result has all minus the weight of the top N+1th result)
     """
-    definitions = wordNetMeaningEmbeddings(lemma.lemma, lemma.pos, embedding)
+    definitions = wordNetMeaningEmbeddings(
+        lemma.lemma, lemma.pos, embedding, lemma.max_sentence_len)
     result = defaultdict(list)
     for instance in lemma.instances:
         similarityDict = sentenceVsDefinitions(
-            instance['context'], definitions, embedding)
+            instance['context'], definitions, embedding, lemma.max_sentence_len)
         candidates = sorted(similarityDict.items(),
                             key=itemgetter(1), reverse=True)[:N+1]
         # get the wiehgt of the N+1th definition

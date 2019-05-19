@@ -51,7 +51,7 @@ def main():
     Dataset = loadSenseval2Format()
     print(Dataset["become.v"].lemma)
     print(Dataset["become.v"].pos)
-    print(Dataset["become.v"].instances["1"])
+    print(Dataset["become.v"].instances[0])
     print(Dataset["become.v"].max_sentence_len)
 
 
