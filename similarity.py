@@ -1,9 +1,9 @@
-from embedding import loadPretrainedFastText, getSentenceEmbedding, wordNetMeaningEmbeddings
+from embedding import loadPretrainedFastText, getSentenceEmbedding, wordNetMeaningEmbeddings, EMBEDDING
 from corpus import loadSenseval2Format
 import numpy as np
 from operator import itemgetter
 from collections import defaultdict
-from configure import Similarity, SentenceEmbedding, SentenceEmbeddingString
+from configure import Similarity, SentenceEmbedding, SentenceEmbeddingString, EmbeddingMethod, EmbeddingMethodString
 import os
 from evaluation import evaluateFromFile
 
@@ -23,7 +23,7 @@ SENTENCE_EMBEDDING = SentenceEmbedding.TextCNN
 
 TOPN = [1, 2, 3, 4, 5]  # the N value to test
 
-RESULT_PATH = "Result" + SIMILARITY + \
+RESULT_PATH = "Result" + SIMILARITY + EmbeddingMethodString[EMBEDDING] + \
     SentenceEmbeddingString[SENTENCE_EMBEDDING]
 
 
@@ -111,6 +111,7 @@ def main():
         print("Strict TopN mode")
     else:
         print("Generalized TopN mode with THRESHOLD:", THRESHOLD)
+    print("Embedding:", EmbeddingMethodString[EMBEDDING])
     print("Sentence Embedding:", SentenceEmbeddingString[SENTENCE_EMBEDDING])
 
     Dataset = loadSenseval2Format()

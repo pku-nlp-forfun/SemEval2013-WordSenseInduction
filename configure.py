@@ -27,3 +27,10 @@ class EmbeddingMethod(Enum):
     FastText = 0
     BERT = 1
     BERT_TORCH = 2
+
+
+EmbeddingMethodString = {
+    EmbeddingMethod.FastText: "FastText",
+    EmbeddingMethod.BERT: "BERT",
+    EmbeddingMethod.BERT_TORCH: "BERT_TORCH"
+}
