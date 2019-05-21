@@ -128,9 +128,11 @@ Big Picture
 
 ![TextCNN Model](images/TextCNN_model.png)
 
-### The ELMo Approach
+### The BiLM ELMo Approach
 
 > Follow the thought of the paper: Word Sense Induction with Neural biLM and Symmetric Patterns
+
+![BiLM Model](images/BiLM_model.png)
 
 ## Evaluation Result
 
