@@ -25,7 +25,15 @@ bash fastTextPretrainEmbedding.sh
 python3 similarity.py
 
 # evaluate
-./evaluate.sh Result/top2.key
+./evaluate.sh ResultFolder/top2.key
+# or
+python3 evaluation.py ResultFolder/top2.key
+```
+
+```sh
+# plot TextCNN Model
+brew install graphviz
+python3 textCNN.py
 ```
 
 ### File Purpose
@@ -117,6 +125,8 @@ Big Picture
 4. TextCNN
     - [bhaveshoswal/CNN-text-classification-keras](https://github.com/bhaveshoswal/CNN-text-classification-keras)
     - [Keras Model class API](https://keras.io/models/model/)
+
+![TextCNN Model](images/TextCNN_model.png)
 
 ### The ELMo Approach
 

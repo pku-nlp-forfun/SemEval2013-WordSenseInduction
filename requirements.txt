@@ -4,3 +4,4 @@ bert_embedding
 tqdm
 torch
 pytorch-pretrained-bert
+pydot
