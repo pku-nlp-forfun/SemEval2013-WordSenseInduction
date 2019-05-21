@@ -180,11 +180,17 @@ Big Picture
 
 | model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
 | ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
-| Top1  | fastText  | Cosine     | 24.02     | 62.72 | 29.53 | 2.97      | 50.48        | 12.24 |
-| Top2  | fastText  | Cosine     | 19.48     | 60.08 | 35.94 | 8.15      | 52.45        | 20.68 |
-| Top3  | fastText  | Cosine     | 19.25     | 59.50 | 37.74 | 7.15      | 42.72        | 17.48 |
-| Top4  | fastText  | Cosine     | 19.21     | 59.42 | 37.21 | 6.53      | 31.78        | 14.40 |
-| Top5  | fastText  | Cosine     | 19.20     | 59.54 | 35.33 | 5.94      | 24.56        | 12.08 |
+| Top1  | fastText  | Cosine     | 23.37     | 61.38 | 29.11 | 3.73      | 52.16        | 13.95 |
+| Top2  | fastText  | Cosine     | 20.52     | 59.82 | 35.28 | 8.55      | 46.58        | 19.95 |
+| Top3  | fastText  | Cosine     | 19.80     | 59.76 | 37.11 | 7.88      | 37.99        | 17.30 |
+| Top4  | fastText  | Cosine     | 18.66     | 59.96 | 35.99 | 7.36      | 30.82        | 15.06 |
+| Top5  | fastText  | Cosine     | 18.39     | 59.79 | 34.66 | 6.95      | 25.37        | 13.28 |
+
+### BERT Embedding generated with model not vector table
+
+| model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top2  | BERT      | Cosine     | 19.65     | 59.89 | 35.66 | 7.93      | 53.06        | 20.51 |
 
 ### Deprecated
 

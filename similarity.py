@@ -5,6 +5,7 @@ from operator import itemgetter
 from collections import defaultdict
 from configure import Similarity, SentenceEmbedding, SentenceEmbeddingString
 import os
+from evaluation import evaluateFromFile
 
 ######## Setting ########
 
@@ -15,7 +16,7 @@ STRICT_N = True
 LEASTN = 1  # at least N result (do not less than 1)
 THRESHOLD = 0.1  # If STRICT_N is False, then it will get rid off the weight which is less than THRESHOLD
 
-# NaiveAdding, NaiveNormalized, NaiveAvgPadding
+# NaiveAdding, NaiveNormalized, NaiveAvgPadding, TextCNN
 SENTENCE_EMBEDDING = SentenceEmbedding.TextCNN
 
 ######## Setting ########
@@ -116,6 +117,9 @@ def main():
     embedding = loadPretrainedFastText()
     for i in TOPN:
         topNcorpusVsWordnet(Dataset, embedding, i)
+        filename = "top%d.key" % i
+        evaluateFromFile(os.path.join(RESULT_PATH, filename),
+                         (os.path.join(RESULT_PATH, "evaluate.log")))
 
 
 if __name__ == "__main__":

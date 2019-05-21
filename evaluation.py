@@ -11,18 +11,21 @@ from typing import Dict
 
 import numpy as np
 
-def evaluateFromFile(input_path: str):
+
+def evaluateFromFile(input_path: str, log_path: str = "log/evaluation.log"):
     ''' evaluation from file '''
     with open(input_path, 'r') as f:
         test = [ii.strip().split() for ii in f.readlines()]
     data = {ii[1]: {jj.split('/')[0]: float(jj.split('/')[1])
                     for jj in ii[2:]} for ii in test}
-    handleScore(data, input_path)
+
+    handleScore(data, input_path, log_path)
 
 
-def handleScore(data: Dict[str, Dict[str, float]], evaluationId: str, outPath: str = None) -> Dict[str, Dict[str, float]]:
+def handleScore(data: Dict[str, Dict[str, float]], evaluationId: str, log_path: str = "log/evaluation.log", outPath: str = None) -> Dict[str, Dict[str, float]]:
     ''' handle score '''
-    scores = evaluate_labeling('./SemEval-2013-Task-13-test-data', data, outPath)
+    scores = evaluate_labeling(
+        './SemEval-2013-Task-13-test-data', data, outPath)
     jaccard = scores['all']['jaccard-index']
     pos = scores['all']['pos-tau']
     WNDC = scores['all']['WNDC']
@@ -32,9 +35,10 @@ def handleScore(data: Dict[str, Dict[str, float]], evaluationId: str, outPath: s
     for ii in scores['all'].values():
         msg += '{:.2f}|'.format(ii * 100)
     msg += '{:.2f}|'.format(np.sqrt(fnmi * fbc) * 100)
-    if not os.path.exists('log'):
-        os.mkdir('log')
-    with open('log/evaluation.log', 'a') as f:
+
+    # mkdir if the folder don't exist
+    os.makedirs(os.path.dirname(log_path), exist_ok=True)
+    with open(log_path, 'a') as f:
         f.write('{}: {}\n'.format(evaluationId, msg.split('\n')[1].strip()))
     print(msg)
     return scores
@@ -60,7 +64,8 @@ def evaluate_labeling(dir_path, labeling: Dict[str, Dict[str, float]], key_path:
             ('FNMI', os.path.join(dir_path, 'scoring/fuzzy-nmi.jar'), 1),
             ('FBC', os.path.join(dir_path, 'scoring/fuzzy-bcubed.jar'), 3),
         ]:
-            res = subprocess.Popen(['java', '-jar', jar, gold_key, eval_key], stdout=subprocess.PIPE).stdout.readlines()
+            res = subprocess.Popen(
+                ['java', '-jar', jar, gold_key, eval_key], stdout=subprocess.PIPE).stdout.readlines()
             for line in res:
                 line = line.decode().strip()
                 if line.startswith('term'):
@@ -82,13 +87,15 @@ def evaluate_labeling(dir_path, labeling: Dict[str, Dict[str, float]], key_path:
         lines = []
         for instance_id, clusters_dict in labeling.items():
             clusters = sorted(clusters_dict.items(), key=lambda x: x[1])
-            clusters_str = ' '.join([('%s/%f' % (cluster_name, count)) for cluster_name, count in clusters])
+            clusters_str = ' '.join(
+                [('%s/%f' % (cluster_name, count)) for cluster_name, count in clusters])
             lemma_pos = instance_id.rsplit('.', 1)[0]
             lines.append('%s %s %s' % (lemma_pos, instance_id, clusters_str))
         fout.write('\n'.join(lines))
         fout.flush()
 
-        scores = get_scores(os.path.join(dir_path, 'keys/gold/all.key'), fout.name)
+        scores = get_scores(os.path.join(
+            dir_path, 'keys/gold/all.key'), fout.name)
         if key_path:
             with open(key_path, 'w', encoding="utf-8") as fout2:
                 fout2.write('\n'.join(lines))
