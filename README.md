@@ -109,6 +109,15 @@ Big Picture
     ERROR: bert-embedding 1.0.1 has requirement numpy==1.14.6, but you'll have numpy 1.16.3 which is incompatible.
     ```
 
+#### Construct Word Embedding to Sentence Embedding
+
+1. Naive Adding
+2. Naive Adding with Normalization
+3. Padded Naive Adding with Normalization
+4. TextCNN
+    - [bhaveshoswal/CNN-text-classification-keras](https://github.com/bhaveshoswal/CNN-text-classification-keras)
+    - [Keras Model class API](https://keras.io/models/model/)
+
 ### The ELMo Approach
 
 > Follow the thought of the paper: Word Sense Induction with Neural biLM and Symmetric Patterns

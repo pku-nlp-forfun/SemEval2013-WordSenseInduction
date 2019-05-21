@@ -11,12 +11,12 @@ import os
 SIMILARITY = "Cosine"  # Cosine, Euclidean, Minkowski
 
 # if the result need to be just N (True) or can be less than N (False)
-STRICT_N = False
+STRICT_N = True
 LEASTN = 1  # at least N result (do not less than 1)
 THRESHOLD = 0.1  # If STRICT_N is False, then it will get rid off the weight which is less than THRESHOLD
 
 # NaiveAdding, NaiveNormalized, NaiveAvgPadding
-SENTENCE_EMBEDDING = SentenceEmbedding.NaiveAdding
+SENTENCE_EMBEDDING = SentenceEmbedding.TextCNN
 
 ######## Setting ########
 
@@ -53,7 +53,7 @@ def topNSimilarity(lemma, N: int, embedding: dict):
     (the top N result has all minus the weight of the top N+1th result)
     """
     definitions = wordNetMeaningEmbeddings(
-        lemma.lemma, lemma.pos, embedding, lemma.max_sentence_len)
+        lemma.lemma, lemma.pos, embedding, lemma.max_sentence_len, method=SENTENCE_EMBEDDING)
     result = defaultdict(list)
     for instance in lemma.instances:
         similarityDict = sentenceVsDefinitions(

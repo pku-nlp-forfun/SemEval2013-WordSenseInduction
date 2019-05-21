@@ -13,9 +13,11 @@ from tqdm import tqdm
 
 from configure import SentenceEmbedding, EmbeddingMethod
 
+from textCNN import TextCNN
+
 ######## Setting ########
 
-EMBEDDING = EmbeddingMethod.BERT_TORCH  # FastText, BERT
+EMBEDDING = EmbeddingMethod.FastText  # FastText, BERT
 EMBEDDING_FILE = "Embedding/wiki-news-300d-1M"  # faxtText official
 
 if EMBEDDING == EmbeddingMethod.BERT:
@@ -100,7 +102,8 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
             return all_sentence_embedding[sentence]
 
     if EMBEDDING == EmbeddingMethod.FastText:
-        returnEmbedding = np.zeros((300, ))
+        if method != SentenceEmbedding.TextCNN:
+            returnEmbedding = np.zeros((300, ))
         if method == SentenceEmbedding.NaiveAdding:
             for word in sentence.split():
                 try:
@@ -129,6 +132,24 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
                 returnEmbedding += embedding['AVG']
             returnEmbedding /= maxSentenceLen
 
+        elif method == SentenceEmbedding.TextCNN:
+            textCNN_model = TextCNN(maxSentenceLen, 300, len(embedding))
+            tempWordEmbedding = np.zeros((maxSentenceLen, 300))
+            sentenceLen = 0
+            for word in sentence.split():
+                try:
+                    tempWordEmbedding[sentenceLen,
+                                      :] = embedding[word.strip(punctuation)]
+                except KeyError:  # getting word which is not in embedding table
+                    tempWordEmbedding[sentenceLen, :] = embedding['AVG']
+                sentenceLen += 1
+            for i in range(sentenceLen, maxSentenceLen):
+                # padding the sentence to maxSentenceLen
+                tempWordEmbedding[i, :] = embedding['AVG']
+
+            returnEmbedding = textCNN_model.getSentenceEmbedding(
+                np.reshape(tempWordEmbedding, (1, maxSentenceLen, 300)))
+
     elif EMBEDDING == EmbeddingMethod.BERT:
         returnEmbedding = np.zeros((768, ))
         if method == SentenceEmbedding.NaiveAdding:
@@ -150,7 +171,7 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
     return returnEmbedding
 
 
-def wordNetMeaningEmbeddings(word: str, pos: str, embedding: dict, maxSentenceLen: int) -> dict:
+def wordNetMeaningEmbeddings(word: str, pos: str, embedding: dict, maxSentenceLen: int, method: int = SentenceEmbedding.NaiveAdding) -> dict:
     """
     Get all the meanings in embedding format of a word in wordNet
 
@@ -161,7 +182,7 @@ def wordNetMeaningEmbeddings(word: str, pos: str, embedding: dict, maxSentenceLe
         for lemma in synset.lemmas():
             if lemma.name() == word:
                 meaningEmbedding[lemma.key()] = getSentenceEmbedding(
-                    synset.definition(), embedding, maxSentenceLen)
+                    synset.definition(), embedding, maxSentenceLen, method)
                 break
 
     return meaningEmbedding

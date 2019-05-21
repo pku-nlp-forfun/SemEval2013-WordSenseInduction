@@ -12,13 +12,16 @@ class SentenceEmbedding(Enum):
     NaiveAdding = 0  # just add all the embedding in the sentence
     NaiveNormalized = 1  # divide the NaiveAdding result by word number
     NaiveAvgPadding = 2  # padding the sentence to same length using average embedding
+    TextCNN = 3  # output max pooling result as the output embedding
 
 
 SentenceEmbeddingString = {
     SentenceEmbedding.NaiveAdding: "NaiveAdding",
     SentenceEmbedding.NaiveNormalized: "NaiveNormalized",
-    SentenceEmbedding.NaiveAvgPadding: "NaiveAvgPadding"
+    SentenceEmbedding.NaiveAvgPadding: "NaiveAvgPadding",
+    SentenceEmbedding.TextCNN: "TextCNN"
 }
+
 
 class EmbeddingMethod(Enum):
     FastText = 0
