@@ -1,6 +1,5 @@
 from corpus import loadSenseval2Format
 from nltk.corpus import wordnet as wn
-from bert_embedding import BertEmbedding
 
 import numpy as np
 
@@ -11,17 +10,33 @@ import os  # isfile
 from string import punctuation  # remove punctuation from string
 
 from tqdm import tqdm
-import torch
 
 from configure import SentenceEmbedding, EmbeddingMethod
-from pytorch_pretrained_bert import BertModel, BertTokenizer
 
+######## Setting ########
 
 EMBEDDING = EmbeddingMethod.BERT_TORCH  # FastText, BERT
 EMBEDDING_FILE = "Embedding/wiki-news-300d-1M"  # faxtText official
-bert_dir = '/Users/gunjianpan/Desktop/git/bert'
-bert = BertModel.from_pretrained(bert_dir)
-tokenizer = BertTokenizer.from_pretrained(f'{bert_dir}/uncased_L-12_H-768_A-12/vocab.txt')
+
+if EMBEDDING == EmbeddingMethod.BERT:
+    from bert_embedding import BertEmbedding
+    bert_embedding = BertEmbedding()
+elif EMBEDDING == EmbeddingMethod.BERT_TORCH:
+    import torch
+    from pytorch_pretrained_bert import BertModel, BertTokenizer
+    # TODO: add download script and replace with relative path
+    bert_dir = '/Users/gunjianpan/Desktop/git/bert'
+    bert = BertModel.from_pretrained(bert_dir)
+    tokenizer = BertTokenizer.from_pretrained(
+        f'{bert_dir}/uncased_L-12_H-768_A-12/vocab.txt')
+
+# if True, it will preserve all the sentence that occur
+PRESERVE_ALL_SENTENCE_EMBEDDING = True
+if PRESERVE_ALL_SENTENCE_EMBEDDING:
+    all_sentence_embedding = {}
+
+#########################
+
 
 def getAllWord():
     """
@@ -79,6 +94,11 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
     And then use max-pooling like TextCNN to reduce to fixed dimension representation.
     """
 
+    # search preserved sentence embedding
+    if PRESERVE_ALL_SENTENCE_EMBEDDING:
+        if sentence in all_sentence_embedding:
+            return all_sentence_embedding[sentence]
+
     if EMBEDDING == EmbeddingMethod.FastText:
         returnEmbedding = np.zeros((300, ))
         if method == SentenceEmbedding.NaiveAdding:
@@ -110,15 +130,22 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
             returnEmbedding /= maxSentenceLen
 
     elif EMBEDDING == EmbeddingMethod.BERT:
-        bert_embedding = BertEmbedding()  # dimension should be (768,)
         returnEmbedding = np.zeros((768, ))
         if method == SentenceEmbedding.NaiveAdding:
+            # dimension should be (768,)
             embeddingList = bert_embedding(sentence.split())
             for _, arrayList in embeddingList:
                 returnEmbedding += arrayList[0]
+
     elif EMBEDDING == EmbeddingMethod.BERT_TORCH:
-        ids = torch.tensor([tokenizer.convert_tokens_to_ids(tokenizer.tokenize(sentence))])
-        returnEmbedding = bert(ids, output_all_encoded_layers=False)[-1][0].detach().numpy()
+        ids = torch.tensor(
+            [tokenizer.convert_tokens_to_ids(tokenizer.tokenize(sentence))])
+        returnEmbedding = bert(
+            ids, output_all_encoded_layers=False)[-1][0].detach().numpy()
+
+    # preserve sentence embedding
+    if PRESERVE_ALL_SENTENCE_EMBEDDING:
+        all_sentence_embedding[sentence] = returnEmbedding
 
     return returnEmbedding
 
