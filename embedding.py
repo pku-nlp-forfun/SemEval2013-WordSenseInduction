@@ -11,14 +11,17 @@ import os  # isfile
 from string import punctuation  # remove punctuation from string
 
 from tqdm import tqdm
+import torch
 
 from configure import SentenceEmbedding, EmbeddingMethod
+from pytorch_pretrained_bert import BertModel, BertTokenizer
 
 
-EMBEDDING = EmbeddingMethod.BERT  # FastText, BERT
-
+EMBEDDING = EmbeddingMethod.BERT_TORCH  # FastText, BERT
 EMBEDDING_FILE = "Embedding/wiki-news-300d-1M"  # faxtText official
-
+bert_dir = '/Users/gunjianpan/Desktop/git/bert'
+bert = BertModel.from_pretrained(bert_dir)
+tokenizer = BertTokenizer.from_pretrained(f'{bert_dir}/uncased_L-12_H-768_A-12/vocab.txt')
 
 def getAllWord():
     """
@@ -113,6 +116,9 @@ def getSentenceEmbedding(sentence: str, embedding: dict, maxSentenceLen: int, me
             embeddingList = bert_embedding(sentence.split())
             for _, arrayList in embeddingList:
                 returnEmbedding += arrayList[0]
+    elif EMBEDDING == EmbeddingMethod.BERT_TORCH:
+        ids = torch.tensor([tokenizer.convert_tokens_to_ids(tokenizer.tokenize(sentence))])
+        returnEmbedding = bert(ids, output_all_encoded_layers=False)[-1][0].detach().numpy()
 
     return returnEmbedding
 
