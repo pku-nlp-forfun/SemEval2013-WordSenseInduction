@@ -2,3 +2,5 @@ nltk
 bs4
 bert_embedding
 tqdm
+torch
+pytorch-pretrained-bert
