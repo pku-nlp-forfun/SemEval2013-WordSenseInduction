@@ -23,3 +23,4 @@ SentenceEmbeddingString = {
 class EmbeddingMethod(Enum):
     FastText = 0
     BERT = 1
+    BERT_TORCH = 2
