@@ -105,17 +105,17 @@ Big Picture
 - [fastText Pretrained English word vectors](https://fasttext.cc/docs/en/english-vectors.html)
 - [imgarylai/bert-embedding](https://github.com/imgarylai/bert-embedding)
 
-    ```py
-    from bert_embedding import BertEmbedding
+  ```py
+  from bert_embedding import BertEmbedding
 
-    bert_embedding = BertEmbedding()
-    result = bert_embedding(sentence)
-    ```
+  bert_embedding = BertEmbedding()
+  result = bert_embedding(sentence)
+  ```
 
-    ```txt
-    ERROR: mxnet 1.4.0 has requirement numpy<1.15.0,>=1.8.2, but you'll have numpy 1.16.3 which is incompatible.
-    ERROR: bert-embedding 1.0.1 has requirement numpy==1.14.6, but you'll have numpy 1.16.3 which is incompatible.
-    ```
+  ```txt
+  ERROR: mxnet 1.4.0 has requirement numpy<1.15.0,>=1.8.2, but you'll have numpy 1.16.3 which is incompatible.
+  ERROR: bert-embedding 1.0.1 has requirement numpy==1.14.6, but you'll have numpy 1.16.3 which is incompatible.
+  ```
 
 #### Construct Word Embedding to Sentence Embedding
 
@@ -144,23 +144,24 @@ Big Picture
 
 > Output of TopN must be N results.
 
-| model | Embedding | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
-| ----- | --------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
-| Top1  | fastText  | Cosine     | 23.81     | 61.84 | 29.30 | 2.81      | 50.22        | 11.89 |
-| Top2  | fastText  | Cosine     | 19.62     | 59.88 | 35.98 | 8.56      | 52.10        | 21.12 |
-| Top3  | fastText  | Cosine     | 19.22     | 59.61 | 37.90 | 7.15      | 42.87        | 17.51 |
-| Top4  | fastText  | Cosine     | 19.20     | 59.58 | 37.47 | 6.61      | 32.07        | 14.56 |
-| Top5  | fastText  | Cosine     | 19.20     | 59.50 | 36.25 | 5.92      | 24.80        | 12.11 |
-| Top1  | fastText  | Euclidean  | 24.45     | 61.35 | 28.96 | 3.63      | 47.78        | 13.17 |
-| Top2  | fastText  | Euclidean  | 21.25     | 60.19 | 35.47 | 7.87      | 46.06        | 19.04 |
-| Top3  | fastText  | Euclidean  | 20.09     | 60.09 | 36.99 | 6.97      | 40.36        | 16.77 |
-| Top4  | fastText  | Euclidean  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
-| Top5  | fastText  | Euclidean  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
-| Top1  | fastText  | Minkowski  | 24.45     | 61.35 | 28.96 | 3.63      | 47.78        | 13.17 |
-| Top2  | fastText  | Minkowski  | 21.25     | 60.19 | 35.47 | 7.87      | 46.06        | 19.04 |
-| Top3  | fastText  | Minkowski  | 20.09     | 60.09 | 36.99 | 6.97      | 40.36        | 16.77 |
-| Top4  | fastText  | Minkowski  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
-| Top5  | fastText  | Minkowski  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
+| model | Embedding  | Similarity | Jac. Ind. | tau   | WDCG  | Fuzzy NMI | Fuzzy B-Cube | AVG   |
+| ----- | ---------- | ---------- | --------- | ----- | ----- | --------- | ------------ | ----- |
+| Top1  | fastText   | Cosine     | 23.81     | 61.84 | 29.30 | 2.81      | 50.22        | 11.89 |
+| Top2  | fastText   | Cosine     | 19.62     | 59.88 | 35.98 | 8.56      | 52.10        | 21.12 |
+| Top3  | fastText   | Cosine     | 19.22     | 59.61 | 37.90 | 7.15      | 42.87        | 17.51 |
+| Top4  | fastText   | Cosine     | 19.20     | 59.58 | 37.47 | 6.61      | 32.07        | 14.56 |
+| Top5  | fastText   | Cosine     | 19.20     | 59.50 | 36.25 | 5.92      | 24.80        | 12.11 |
+| Top1  | fastText   | Euclidean  | 24.45     | 61.35 | 28.96 | 3.63      | 47.78        | 13.17 |
+| Top2  | fastText   | Euclidean  | 21.25     | 60.19 | 35.47 | 7.87      | 46.06        | 19.04 |
+| Top3  | fastText   | Euclidean  | 20.09     | 60.09 | 36.99 | 6.97      | 40.36        | 16.77 |
+| Top4  | fastText   | Euclidean  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
+| Top5  | fastText   | Euclidean  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
+| Top1  | fastText   | Minkowski  | 24.45     | 61.35 | 28.96 | 3.63      | 47.78        | 13.17 |
+| Top2  | fastText   | Minkowski  | 21.25     | 60.19 | 35.47 | 7.87      | 46.06        | 19.04 |
+| Top3  | fastText   | Minkowski  | 20.09     | 60.09 | 36.99 | 6.97      | 40.36        | 16.77 |
+| Top4  | fastText   | Minkowski  | 19.51     | 59.90 | 36.00 | 6.46      | 34.25        | 14.87 |
+| Top5  | fastText   | Minkowski  | 19.44     | 59.72 | 34.59 | 6.15      | 28.33        | 13.20 |
+| Top2  | Bert Model | Cosine     | 20.91     | 60.04 | 34.62 | 6.74      | 46.78        | 17.76 |
 
 #### Generalized TopN Approach Result
 
@@ -303,8 +304,41 @@ wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
   - thematic
   - semantic
 
-## Exercise
+## BiLim
 
-| model | Embedding | Jac.  | POS   | WNDC  | F-NMI | F_BC  | AVG   |
-| ----- | --------- | ----- | ----- | ----- | ----- | ----- | ----- |
-| BiLM  | ELMo      | 20.20 | 62.40 | 34.06 | 11.06 | 57.72 | 25.27 |
+| LM   | cluster  | Jac.  | POS   | WDCG    | F-NMI   | F_BC  | AVG     |
+| ---- | -------- | ----- | ----- | ------- | ------- | ----- | ------- |
+| ELMo | one-hot  | 19.58 | 61.45 | 33.25   | 9.28    | 58.70 | 23.34   |
+| ELMo | tf-idf   | 20.20 | 62.40 | `34.06` | `11.06` | 57.72 | `25.27` |
+| ELMo | Bert     | 19.20 | 60.23 | 30.69   | 2.65    | 54.34 | 12.00   |
+| ELMo | Glove    | 21.22 | 63.18 | 32.00   | 8.28    | 60.90 | 22.45   |
+| ELMo | FastText | 20.14 | 62.14 | 31.47   | 7.40    | 61.39 | 21.32   |
+
+| LM    | cluster  | Jac.  | POS     | WDCG  | F-NMI | F_BC  | AVG   |
+| ----- | -------- | ----- | ------- | ----- | ----- | ----- | ----- |
+| Glove | one-hot  | 19.59 | 61.66   | 32.63 | 8.66  | 59.21 | 22.64 |
+| Glove | tf-idf   | 19.94 | 62.50   | 33.65 | 10.69 | 57.68 | 24.83 |
+| Glove | Glove    | 21.31 | `63.87` | 31.83 | 8.08  | 60.88 | 22.18 |
+| Glove | FastText | 19.81 | 61.78   | 30.92 | 6.49  | 61.08 | 19.91 |
+
+| LM       | cluster  | Jac.    | POS   | WDCG  | F-NMI | F_BC    | AVG   |
+| -------- | -------- | ------- | ----- | ----- | ----- | ------- | ----- |
+| FastText | one-hot  | 19.66   | 61.79 | 32.97 | 8.78  | 58.59   | 22.68 |
+| FastText | tf-idf   | 20.08   | 62.90 | 33.80 | 10.82 | 57.34   | 24.90 |
+| FastText | Glove    | `21.80` | 63.49 | 31.77 | 7.79  | 60.52   | 21.72 |
+| FastText | FastText | 20.73   | 62.15 | 31.37 | 7.08  | `61.11` | 20.80 |
+
+## Trouble Shooting
+
+1. AttributeError: '\_NamespacePath' object has no attribute 'sort'
+
+It's difficult to solve in Intel® AI DevCloud
+
+```bash
+pip install --upgrade pip
+
+python3 -m pip install --user --upgrade pip==9.0.3
+
+wget https://bootstrap.pypa.io/get-pip.py
+python get-pip.py --user
+```
