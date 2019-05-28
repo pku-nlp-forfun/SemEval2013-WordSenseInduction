@@ -123,8 +123,8 @@ Big Picture
 2. Naive Adding with Normalization
 3. Padded Naive Adding with Normalization
 4. TextCNN
-    - [bhaveshoswal/CNN-text-classification-keras](https://github.com/bhaveshoswal/CNN-text-classification-keras)
-    - [Keras Model class API](https://keras.io/models/model/)
+   - [bhaveshoswal/CNN-text-classification-keras](https://github.com/bhaveshoswal/CNN-text-classification-keras)
+   - [Keras Model class API](https://keras.io/models/model/)
 
 ![TextCNN Model](images/TextCNN_model.png)
 
@@ -306,6 +306,8 @@ wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
 
 ## BiLim
 
+### Exercise for cluster method & Language Model method
+
 | LM   | cluster  | Jac.  | POS   | WDCG    | F-NMI   | F_BC  | AVG     |
 | ---- | -------- | ----- | ----- | ------- | ------- | ----- | ------- |
 | ELMo | one-hot  | 19.58 | 61.45 | 33.25   | 9.28    | 58.70 | 23.34   |
@@ -327,6 +329,19 @@ wn.lemma('dark.n.01.dark') # a Lemma (dark in dark.n.01)
 | FastText | tf-idf   | 20.08   | 62.90 | 33.80 | 10.82 | 57.34   | 24.90 |
 | FastText | Glove    | `21.80` | 63.49 | 31.77 | 7.79  | 60.52   | 21.72 |
 | FastText | FastText | 20.73   | 62.15 | 31.37 | 7.08  | `61.11` | 20.80 |
+
+### Exercise for cluster num
+
+LM=ELMo, cluster=tf-idf
+
+| LM   | clusterNum | Jac.  | POS   | WDCG    | F-NMI   | F_BC  | AVG     |
+| ---- | ---------- | ----- | ----- | ------- | ------- | ----- | ------- |
+| ELMo | 5          | 19.68 | 61.67 | 32.29   | 9.68    | 58.88 | 23.87   |
+| ELMo | 6          | 19.93 | 61.90 | 33.28   | 10.21   | 58.25 | 24.39   |
+| ELMo | 7          | 20.20 | 62.40 | `34.06` | `11.06` | 57.72 | `25.27` |
+| ELMo | 8          | 20.38 | 61.72 | 34.46   | 10.88   | 56.60 | 24.82   |
+| ELMo | 9          | 20.30 | 62.34 | 35.25   | 11.58   | 56.61 | 25.60   |
+| ELMo | 10         | 20.39 | 62.67 | 35.23   | 10.95   | 55.94 | 24.75   |
 
 ## Trouble Shooting
 
